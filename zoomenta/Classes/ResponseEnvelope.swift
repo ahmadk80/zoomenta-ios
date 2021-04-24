@@ -14,6 +14,10 @@ class ResponseEnvelope<T : Decodable> : Decodable{
         self.message = message
         self.result = result
     }
+    func ResponseEnvelope(result: Bool, message: String){
+        self.message = message
+              self.result = result
+    }
     var result: Bool?
     var message: String?
     var data: T?

@@ -10,7 +10,9 @@ import Foundation
 import UIKit
 public class DeliveryNoteCell : UITableViewCell{
     
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDate: UILabel!
-    
+ 
 }

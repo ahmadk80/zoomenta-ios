@@ -11,7 +11,9 @@ import UIKit
 public class DeliveryNoteHeaderCell : UITableViewCell
 {
   
+    @IBOutlet weak var lblName: UIView!
     @IBOutlet weak var dateTo: UITextField!
     
+    @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var dateFrom: UITextField!
 }

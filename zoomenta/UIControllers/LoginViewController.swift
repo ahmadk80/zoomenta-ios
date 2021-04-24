@@ -9,57 +9,54 @@
 import Foundation
 import UIKit
 
-class LoginViewController: UIViewController {
-
+class LoginViewController: BaseUICtrl {
+    
     @IBOutlet weak var txtCode: UITextField!
     override func viewDidAppear(_ animated: Bool) {
         if(GlobalVariables.sharedManager.isLoggedIn())
         {
-             loadHomeScreenDirectly()
+            self.loadMainScreen()
         }
         GlobalVariables.sharedManager.silentLogin = false
         NotificationCenter.default.addObserver(
-                  self,
-                  selector: #selector(LoginViewController.reactToLoginResult(_:)),
-                  name: NSNotification.Name(rawValue: GlobalVariables.actionLoginCompleteNotificationName),
-                  object: nil)
+            self,
+            selector: #selector(LoginViewController.reactToLoginResult(_:)),
+            name: NSNotification.Name(rawValue: GlobalVariables.actionLoginCompleteNotificationName),
+            object: nil)
+        fixTextBox(txt: txtCode)
     }
     
     
-       @objc func reactToLoginResult(_ note: Notification) {
-                 OperationQueue.main.addOperation(){
-                    let response: ResponseEnvelope<User> = try! note.userInfo?["response"] as! ResponseEnvelope<User>
-                    if(response.result == true){
-                     //Do UI stuff here
-                     self.loadHomeScreenDirectly()
-                    }else{
-                        self.alertWrongDataEntered()
-                    }
-           }
+    @objc func reactToLoginResult(_ note: Notification) {
+        OperationQueue.main.addOperation(){
+            let response: ResponseEnvelope<User> = try! note.userInfo?["response"] as! ResponseEnvelope<User>
+            if(response.result == true){
+                //Do UI stuff here
+                self.loadLogin()
+            }else{
+                self.removeSpinner()
+                
+                GlobalFunctions.alertError(webView: self, strError: "Please enter a valid OTP")
+            }
+        }
     }
+    
+    
  
-
-    fileprivate func alertWrongDataEntered() {
-        let alertMessage = UIAlertController(title: "Error", message:
-            "Kindly enter your credentials before proceeding!", preferredStyle: .alert)
-        alertMessage.addAction(UIAlertAction(title: "Ok", style:         .default, handler:
-            nil))
-        self.present(alertMessage, animated: true, completion: nil)
-    }
     
     @IBAction func click_btnLogin(_ sender: Any) {
         
         if(txtCode.text != ""){
-                WebFunctions.Login(txtCode.text!, DeviceId: "0")
-            } else{
-            alertWrongDataEntered()
-            }
+            showSpinner(onView: self.view)
+            guard let deviceID = UIDevice.current.identifierForVendor?.uuidString else {
+                return
+             }
+           
+            WebFunctions.Login(txtCode.text!, DeviceId: deviceID)
+        } else{
+            GlobalFunctions.alertError(webView: self, strError: "Please enter OTP")
+        }
     }
     
-    func loadHomeScreenDirectly(){
-//        performSegue(withIdentifier: "segueShowHomeScreen", sender: self)
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-         let mainTabBarController = storyBoard.instantiateViewController(identifier:  "MainTabBarController")
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(mainTabBarController)
-    }
+   
 }

@@ -52,7 +52,7 @@ class DeliveryNoteTableViewController: UITableViewController {
         }
     }
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        return 150
     }
     override  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
@@ -61,10 +61,16 @@ class DeliveryNoteTableViewController: UITableViewController {
         GlobalVariables.sharedManager.selectedDeliveryNote = GlobalVariables.sharedManager.deliverNotes[indexPath.row].deliveryNoteId
         performSegue(withIdentifier: "segueDNDetails", sender: nil)
     }
+ 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryNoteHeaderCell") as! DeliveryNoteHeaderCell
-        
+        var monthCom = DateComponents()
+            monthCom.month = -10
+        let currCalendar = Calendar.current
+        cell.dateTo.text = DateFormatter().string(from: Date())
+        cell.dateFrom.text = DateFormatter().string(from: currCalendar.date(byAdding: monthCom, to: Date()) ?? Date())
+        view.addSubview(cell)
         return cell
         //create the UITextfield to present the Date Picker
         //createUITextField(viewParam: self.view)
@@ -145,8 +151,8 @@ class DeliveryNoteTableViewController: UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryNoteCell", for: indexPath) as! DeliveryNoteCell
-        print("\(#function) --- section = \(indexPath.section), row = \(indexPath.row)")
-        
+//        print("\(#function) --- section = \(indexPath.section), row = \(indexPath.row)")
+//
         cell.lblName.text = GlobalVariables.sharedManager.deliverNotes[indexPath.row].name
         
         
@@ -163,7 +169,7 @@ class DeliveryNoteTableViewController: UITableViewController {
         return 1
     }
     
-    @IBOutlet weak var lblFrom: UILabel!
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         if(GlobalVariables.sharedManager.deliverNotes == nil){
@@ -173,91 +179,91 @@ class DeliveryNoteTableViewController: UITableViewController {
         return GlobalVariables.sharedManager.deliverNotes.count
     }
     
-    
-    func createUITextField(viewParam: UIView){
-        
-        let myLabel = UILabel()
-        myLabel.textColor = UIColor.black
-        myLabel.text = "Date: "
-        myLabel.font = UIFont.systemFont(ofSize: 24.0)
-        myLabel.translatesAutoresizingMaskIntoConstraints = false
-        viewParam.addSubview(myLabel)
-        
-        //        let myLabel2 = UILabel()
-        //        myLabel2.textColor = UIColor.brown
-        //        myLabel2.text = " (MM/DD/YY) "
-        //        myLabel2.font = UIFont.systemFont(ofSize: 24.0)
-        //        myLabel2.translatesAutoresizingMaskIntoConstraints = false
-        //        self.view.addSubview(myLabel2)
-        
-        dateTextField = UITextField()
-        dateTextField?.text = "Select a date ..."
-        dateTextField?.textColor = UIColor.black
-        dateTextField?.font = UIFont.systemFont(ofSize: 24.0)
-        dateTextField?.layer.borderColor = UIColor.lightGray.cgColor
-        dateTextField?.layer.borderWidth = 1.0
-        dateTextField?.layer.cornerRadius = 3;
-        dateTextField?.translatesAutoresizingMaskIntoConstraints = false
-        viewParam.addSubview(dateTextField!)
-        
-        
-        var allConstraints: [NSLayoutConstraint] = []
-        let views = ["view": view!, "myLabel": myLabel, "dateTextField": dateTextField]// , "myLabel2": myLabel2]
-        
-        let horizontalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "H:|-[myLabel]-[dateTextField(200)]-|",
-            options: [.alignAllTop, .alignAllBottom], metrics: nil, views: views as [String : Any])
-        allConstraints += horizontalConstraints
-        
-        var verticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=40)-[myLabel]", metrics: nil, views: views as [String : Any])
-        allConstraints += verticalConstraints
-        verticalConstraints = NSLayoutConstraint.constraints(
-            withVisualFormat: "V:|-(>=40)-[dateTextField]", metrics: nil, views: views as [String : Any])
-        allConstraints += verticalConstraints
-        
-        allConstraints += verticalConstraints
-        
-        
-        NSLayoutConstraint.activate(allConstraints)
-        
-    }
-    
-    func createUIToolBar() {
-        
-        pickerToolbar = UIToolbar()
-        pickerToolbar?.autoresizingMask = .flexibleHeight
-        
-        //customize the toolbar
-        pickerToolbar?.barStyle = .default
-        pickerToolbar?.barTintColor = UIColor.black
-        pickerToolbar?.backgroundColor = UIColor.white
-        pickerToolbar?.isTranslucent = false
-        
-        //add buttons
-        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action:
-            #selector(cancelBtnClicked(_:)))
-        cancelButton.tintColor = UIColor.white
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action:
-            #selector(self.doneBtnClicked(_:)))
-        doneButton.tintColor = UIColor.white
-        
-        //add the items to the toolbar
-        pickerToolbar?.items = [cancelButton, flexSpace, doneButton]
-        
-    }
-    
-    @objc func cancelBtnClicked(_ button: UIBarButtonItem?) {
-        dateTextField?.resignFirstResponder()
-    }
-    
-    @objc func doneBtnClicked(_ button: UIBarButtonItem?) {
-        dateTextField?.resignFirstResponder()
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        dateTextField?.text = formatter.string(from: datePicker.date)
-    }
+//
+//    func createUITextField(viewParam: UIView){
+//
+//        let myLabel = UILabel()
+//        myLabel.textColor = UIColor.black
+//        myLabel.text = "Date: "
+//        myLabel.font = UIFont.systemFont(ofSize: 24.0)
+//        myLabel.translatesAutoresizingMaskIntoConstraints = false
+//        viewParam.addSubview(myLabel)
+//
+//        //        let myLabel2 = UILabel()
+//        //        myLabel2.textColor = UIColor.brown
+//        //        myLabel2.text = " (MM/DD/YY) "
+//        //        myLabel2.font = UIFont.systemFont(ofSize: 24.0)
+//        //        myLabel2.translatesAutoresizingMaskIntoConstraints = false
+//        //        self.view.addSubview(myLabel2)
+//
+//        dateTextField = UITextField()
+//        dateTextField?.text = "Select a date ..."
+//        dateTextField?.textColor = UIColor.black
+//        dateTextField?.font = UIFont.systemFont(ofSize: 24.0)
+//        dateTextField?.layer.borderColor = UIColor.lightGray.cgColor
+//        dateTextField?.layer.borderWidth = 1.0
+//        dateTextField?.layer.cornerRadius = 3;
+//        dateTextField?.translatesAutoresizingMaskIntoConstraints = false
+//        viewParam.addSubview(dateTextField!)
+//
+//
+//        var allConstraints: [NSLayoutConstraint] = []
+//        let views = ["view": view!, "myLabel": myLabel, "dateTextField": dateTextField]// , "myLabel2": myLabel2]
+//
+//        let horizontalConstraints = NSLayoutConstraint.constraints(
+//            withVisualFormat: "H:|-[myLabel]-[dateTextField(200)]-|",
+//            options: [.alignAllTop, .alignAllBottom], metrics: nil, views: views as [String : Any])
+//        allConstraints += horizontalConstraints
+//
+//        var verticalConstraints = NSLayoutConstraint.constraints(
+//            withVisualFormat: "V:|-(>=40)-[myLabel]", metrics: nil, views: views as [String : Any])
+//        allConstraints += verticalConstraints
+//        verticalConstraints = NSLayoutConstraint.constraints(
+//            withVisualFormat: "V:|-(>=40)-[dateTextField]", metrics: nil, views: views as [String : Any])
+//        allConstraints += verticalConstraints
+//
+//        allConstraints += verticalConstraints
+//
+//
+//        NSLayoutConstraint.activate(allConstraints)
+//
+//    }
+//
+//    func createUIToolBar() {
+//
+//        pickerToolbar = UIToolbar()
+//        pickerToolbar?.autoresizingMask = .flexibleHeight
+//
+//        //customize the toolbar
+//        pickerToolbar?.barStyle = .default
+//        pickerToolbar?.barTintColor = UIColor.black
+//        pickerToolbar?.backgroundColor = UIColor.white
+//        pickerToolbar?.isTranslucent = false
+//
+//        //add buttons
+//        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action:
+//            #selector(cancelBtnClicked(_:)))
+//        cancelButton.tintColor = UIColor.white
+//        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+//        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action:
+//            #selector(self.doneBtnClicked(_:)))
+//        doneButton.tintColor = UIColor.white
+//
+//        //add the items to the toolbar
+//        pickerToolbar?.items = [cancelButton, flexSpace, doneButton]
+//
+//    }
+//
+//    @objc func cancelBtnClicked(_ button: UIBarButtonItem?) {
+//        dateTextField?.resignFirstResponder()
+//    }
+//
+//    @objc func doneBtnClicked(_ button: UIBarButtonItem?) {
+//        dateTextField?.resignFirstResponder()
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = .short
+//        dateTextField?.text = formatter.string(from: datePicker.date)
+//    }
     
     /*
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

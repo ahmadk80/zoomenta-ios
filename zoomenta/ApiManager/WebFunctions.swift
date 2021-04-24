@@ -31,6 +31,7 @@ class WebFunctions {
         
         let myWebFunctions: WebFunctions = WebFunctions()
         let myParameters: String = "{\"From\": \"\(strFrom)\", \"To\":\"\(strTo)\"}"
+       //print(myParameters)
         myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.deliveryNoteHistoryOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.deliveryNoteHistoryOperation, AndRequestType: "POST", AndShowLoader: true)
     }
     class func GetDeliveryNoteDetails(deliveryNoteId: Int){
@@ -46,7 +47,7 @@ class WebFunctions {
     
     
     
-    func fetchedDataLogin(_ data: Data){
+    func fetchedDataLogin(_ data: Data) {
         var item: User  = User()
         let response: ResponseEnvelope<User>
         
@@ -59,7 +60,7 @@ class WebFunctions {
             //            let endcodedUser = try JSONEncoder().encode(item)
             UserDefaults.standard.set(otp, forKey: "otp")
         } catch {
-            print(error)
+            handleFetchError(error: error)
         }
         
         if(GlobalVariables.sharedManager.silentLogin){
@@ -83,39 +84,10 @@ class WebFunctions {
             response = try! JSONDecoder().decode(ResponseEnvelope<[DeliverNote]>.self, from: data)
             items = ((response.data ?? nil)!)
             GlobalVariables.sharedManager.deliverNotes = items
-            //                    for myItem in response.data ?? <#default value#> {
-            //                                  let item:DeliverNote = DeliverNote()
-            //
-            //                                  // Parse JSON data
-            //                                  item.deliveryNoteId = ((myItem as! NSDictionary)["deliveryNoteId"] as? Int)!
-            //                                  item.name = ((myItem as! NSDictionary)["name"] as? String)!
-            //                                  item.scanningDate = ((myItem as! NSDictionary)["scanningDate"] as? String)!
-            //
-            //                                  items.append(item)
-            //                              }
         } catch {
-            print(error)
+            handleFetchError(error: error)
         }
         
-        
-        
-        //       do {
-        //           let jsonResult: NSArray = try JSONSerialization.jsonObject(with: data,
-        //                                                                           options: JSONSerialization.ReadingOptions.mutableContainers) as! NSArray
-        //
-        //           for myItem in jsonResult {
-        //               let item:DeliverNote = DeliverNote()
-        //
-        //               // Parse JSON data
-        //               item.deliveryNoteId = ((myItem as! NSDictionary)["deliveryNoteId"] as? Int)!
-        //               item.name = ((myItem as! NSDictionary)["name"] as? String)!
-        //               item.scanningDate = ((myItem as! NSDictionary)["scanningDate"] as? String)!
-        //
-        //               items.append(item)
-        //           }
-        //       } catch {
-        //           print(error)
-        //       }
         NotificationCenter.default.post(name: Notification.Name(rawValue: GlobalVariables.actionDeliveryNoteHistoryCompleteNotificationName), object: items)
     }
     
@@ -131,18 +103,31 @@ class WebFunctions {
             
         }
         catch {
-            print(error)
+            handleFetchError(error: error)
         }
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: GlobalVariables.actionDeliveryNoteDetailsCompleteNotificationName), object: nil)
     }
     
     func fetchScanDeliveryNoteData(_ data: Data){
-        var items: String  = ""
-        NotificationCenter.default.post(name: Notification.Name(rawValue: GlobalVariables.actionScanDeliveryNoteCompleteNotificationName), object: items)
+        let response: ResponseEnvelope<String>
+        
+        do {
+            response = try! JSONDecoder().decode(ResponseEnvelope.self, from: data)
+            response.data = "" //((response.data ?? nil)!)
+            
+        }
+        catch {
+            handleFetchError(error: error)
+        }
+        
+        NotificationCenter.default.post(name: Notification.Name(rawValue: GlobalVariables.actionScanDeliveryNoteCompleteNotificationName), object: nil,userInfo: ["response": response])
     }
     
-    
+    func handleFetchError(error: Error)  {
+        
+        print(error)
+    }
     
     func SendPOSTRequestWithOperation(_ myOperation: String, AndParameters myParameters: String, AndLoaderText myLoaderText: String, AndCallBackKey myCallBackKey: String, AndRequestType:String, AndShowLoader: Bool) {
         
@@ -187,14 +172,17 @@ class WebFunctions {
             
             // Parse JSON data
             if let data = data {
-                if (myCallBackKey == GlobalVariables.loginOperation){
-                    self.fetchedDataLogin(data)
-                }else if (myCallBackKey == GlobalVariables.deliveryNoteHistoryOperation){
-                    self.fetchDeliveryNoteData(data)
-                }else if(myCallBackKey == GlobalVariables.deliveryNoteDetailsOperation){
-                    self.fetchDeliveryNoteDetailsDate(data)
-                }else if(myCallBackKey == GlobalVariables.scanDeliveryNoteOperation){
-                    self.fetchScanDeliveryNoteData(data)
+                 
+                  
+                    if (myCallBackKey == GlobalVariables.loginOperation){
+                         self.fetchedDataLogin(data)
+                    }else if (myCallBackKey == GlobalVariables.deliveryNoteHistoryOperation){
+                        self.fetchDeliveryNoteData(data)
+                    }else if(myCallBackKey == GlobalVariables.deliveryNoteDetailsOperation){
+                        self.fetchDeliveryNoteDetailsDate(data)
+                    }else if(myCallBackKey == GlobalVariables.scanDeliveryNoteOperation){
+                        self.fetchScanDeliveryNoteData(data)
+                   
                 }
             }
             if AndShowLoader {

@@ -9,25 +9,23 @@
 import Foundation
 import UIKit
 
-class MyProfileViewController: UIViewController {
+class MyProfileViewController: BaseUICtrl {
     
     @IBOutlet weak var txtFullName: UITextField!
     
+    @IBOutlet weak var btnLogout: UIBarButtonItem!
     @IBOutlet weak var txtEmail: UITextField!
     
+    
+    @IBAction func btnLogout(_ sender: Any) {
+         alertLogout(webView: self)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        fixTextBox(txt: txtFullName)
-        fixTextBox(txt: txtEmail)
+        super.fixTextBox(txt: txtFullName, disableTextBox: false)
+        super.fixTextBox(txt: txtEmail, disableTextBox: false)
         txtEmail.text = GlobalVariables.sharedManager.myUser.email
         txtFullName.text = GlobalVariables.sharedManager.myUser.fullName
     }
-    func fixTextBox(txt: UITextField){
-        let botomLine = CALayer()
-        botomLine.frame = CGRect(x: 0.0, y: txt.frame.height - 1, width: txt.frame.width, height: 1.0)
-        botomLine.backgroundColor = UIColor.gray.cgColor
-        txt.borderStyle = UITextField.BorderStyle.none
-        txt.layer.addSublayer(botomLine)
-        txt.isEnabled = false
-        
-    }
+  
 }

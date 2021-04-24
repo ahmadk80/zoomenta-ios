@@ -18,20 +18,32 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
-        
-        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        if UserDefaults.standard.string(forKey: "otp") != nil{
-            WebFunctions.Login(UserDefaults.standard.string(forKey: "otp") ?? "", DeviceId: "0")
-//            let mainTabBarController = storyBoard.instantiateViewController(identifier:  "MainTabBarController")
-//                window?.rootViewController = mainTabBarController
+     //   Switcher.updateRootVC()
 //
-         
-        } else{
-            let mainTabBarController = storyBoard.instantiateViewController(identifier:  "LoginNavigationController")
-                       window?.rootViewController = mainTabBarController
-        }
-
+//        if UserDefaults.standard.string(forKey: "otp") != nil{
+//            WebFunctions.Login(UserDefaults.standard.string(forKey: "otp") ?? "", DeviceId: "0")
+////            let mainTabBarController = storyBoard.instantiateViewController(identifier:  "MainTabBarController")
+////                window?.rootViewController = mainTabBarController
+////
+//
+//        } else{
+//        startLogin()
+//        }
     }
+    @objc func startLogin(){
+         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let mainTabBarController = storyBoard.instantiateInitialViewController()
+        UIApplication.shared.delegate?.window??.rootViewController = mainTabBarController
+        
+        //navigationController?.show(mainTabBarController, sender: self)
+        
+        
+//             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+//        let mainTabBarController = storyBoard.instantiateInitialViewController()
+//        window?.rootViewController = mainTabBarController
+//        .show(mainTabBarController, sender: self)
+    }
+    
     func changeRootViewController(_ vc: UIViewController, animated: Bool = true){
         guard let window = self.window else {
             return
