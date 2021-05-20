@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "WebFunctions.fetchedDataLogin(_:):WebFunctions.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(jsonResult[&quot;data&quot;] as! NSDictionary)[&quot;data&quot;]">
+            </PersistentString>
+            <PersistentString
+               value = "response.data.userId">
+            </PersistentString>
+            <PersistentString
+               value = "(jsonResult[&quot;data&quot;] as! NSDictionary)[&quot;fullName&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DeliveryNoteTableViewController.viewDidLoad():DeliveryNoteTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Date.init()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "GlobalVariables.isLoggedIn():GlobalVariables.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "GlobalVariables.sharedManager.myUser">
+            </PersistentString>
+            <PersistentString
+               value = "isLoggedIn()">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "SceneDelegate.scene(_:willConnectTo:options:):SceneDelegate.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "UserDefaults.standard.string(forKey: &quot;otp&quot;)">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in WebFunctions.SendPOSTRequestWithOperation(_:AndParameters:AndLoaderText:AndCallBackKey:AndRequestType:AndShowLoader:):WebFunctions.swift">
+      </ContextState>
+      <ContextState
+         contextName = "WebFunctions.fetchDeliveryNoteDetailsDate(_:):WebFunctions.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "items[0]">
+            </PersistentString>
+            <PersistentString
+               value = "DNDetailsTableController[0]">
+            </PersistentString>
+            <PersistentString
+               value = "Glo">
+            </PersistentString>
+            <PersistentString
+               value = "GlobalVariables.sharedManager.deliverNoteDetails[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in DeliveryNoteTableViewController.reactToLoadDeliveryResult(_:):DeliveryNoteTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "GlobalVariables.sharedManager.deliverNotes.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DeliveryNoteTableViewController.tableView(_:numberOfRowsInSection:):DeliveryNoteTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "GlobalVariables.sharedManager.deliverNotes">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
