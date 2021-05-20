@@ -10,10 +10,12 @@ import Foundation
 import UIKit
 class DeliveryNoteDetailsViewController: BaseUICtrl, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
+    @IBOutlet weak var txtDeliveryName: UITextField!
+    @IBOutlet weak var txtQuantity: UITextField!
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if(indexPath.row % 2 == 0)
         {
-            cell.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            cell.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
         }
         else
         {
@@ -25,15 +27,18 @@ class DeliveryNoteDetailsViewController: BaseUICtrl, UITableViewDataSource, UITa
         view.backgroundColor = #colorLiteral(red: 0.6705882353, green: 0.7647058824, blue: 0.2196078431, alpha: 1)
     }
     
+    
+
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(searchActive) {
             return GlobalVariables.sharedManager.filtered.count
         }
         return GlobalVariables.sharedManager.deliverNoteDetails.count
     }
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 35
+//    }
     var searchActive: Bool = false
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true;
@@ -93,15 +98,21 @@ class DeliveryNoteDetailsViewController: BaseUICtrl, UITableViewDataSource, UITa
         return cell;
     }
     
-    override func viewDidAppear(_ animated: Bool) { 
-        WebFunctions.GetDeliveryNoteDetails(deliveryNoteId: GlobalVariables.sharedManager.selectedDeliveryNote)
+    override func viewDidAppear(_ animated: Bool) {
+        WebFunctions.GetDeliveryNoteDetails(deliveryNoteId: GlobalVariables.sharedManager.deliverNotes[GlobalVariables.sharedManager.selectedDeliveryNoteIndex].deliveryNoteId, controller: self)
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(loadDeliveryNoteDetails(_:)),
             name: NSNotification.Name(rawValue: GlobalVariables.actionDeliveryNoteDetailsCompleteNotificationName),
             object: nil)
         
-        
+//        rect: CGRect = self.searchBar.frame
+//        
+//        lineView: UIView = [[UIView, alloc]initWithFrame:CGRectMake(0, rect.size.height-2,rect.size.width, 2)]
+//        
+//        lineView.backgroundColor = [UIColor whiteColor]
+//        
+//        [self.searchBar addSubview:lineView];
     }
     
     
@@ -117,6 +128,10 @@ class DeliveryNoteDetailsViewController: BaseUICtrl, UITableViewDataSource, UITa
             if(GlobalVariables.sharedManager.deliverNoteDetails.count == 0){
                 self.showAlert(withTitle: "No Data", message: "There is no data found")
             }
+            self.txtQuantity.text = String(GlobalVariables.sharedManager.deliverNoteDetails.count)
+            
+            self.txtDeliveryName.text =    GlobalVariables.sharedManager.deliverNotes[GlobalVariables.sharedManager.selectedDeliveryNoteIndex].name
+            
         }
     }
     

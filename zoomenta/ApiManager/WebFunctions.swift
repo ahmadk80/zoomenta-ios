@@ -12,17 +12,17 @@ import UIKit
 
 
 class WebFunctions {
-    class func Login(_ ActivationCode:String, DeviceId:String)
+    class func Login(_ ActivationCode:String, DeviceId:String, controller: BaseUICtrl)
     {
         
         let myWebFunctions: WebFunctions = WebFunctions()
         myWebFunctions.otp = ActivationCode
         let myParameters: String = "{\"otp\":\"\(ActivationCode)\",\"deviceId\":\"\(DeviceId)\"}"
-        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.loginOperation, AndParameters: myParameters, AndLoaderText: "Please Wait", AndCallBackKey: GlobalVariables.loginOperation, AndRequestType: "POST", AndShowLoader: true)
+        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.loginOperation, AndParameters: myParameters, AndLoaderText: "Please Wait", AndCallBackKey: GlobalVariables.loginOperation, AndRequestType: "POST", AndShowLoader: true, controller: controller)
     }
     internal var otp: String = ""
     
-    class func GetDeliveryNoteHistory(from: Date,to: Date)
+    class func GetDeliveryNoteHistory(from: Date,to: Date, controller: BaseUICtrl)
     {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -32,17 +32,17 @@ class WebFunctions {
         let myWebFunctions: WebFunctions = WebFunctions()
         let myParameters: String = "{\"From\": \"\(strFrom)\", \"To\":\"\(strTo)\"}"
        //print(myParameters)
-        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.deliveryNoteHistoryOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.deliveryNoteHistoryOperation, AndRequestType: "POST", AndShowLoader: true)
+        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.deliveryNoteHistoryOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.deliveryNoteHistoryOperation, AndRequestType: "POST", AndShowLoader: true, controller: controller)
     }
-    class func GetDeliveryNoteDetails(deliveryNoteId: Int){
+    class func GetDeliveryNoteDetails(deliveryNoteId: Int, controller: BaseUICtrl){
         let myWebFunctions: WebFunctions = WebFunctions()
         let myParameters: String = "{\"deliveryNoteId\":\"\(deliveryNoteId)\"}"
-        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.deliveryNoteDetailsOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.deliveryNoteDetailsOperation, AndRequestType: "POST", AndShowLoader: true)
+        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.deliveryNoteDetailsOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.deliveryNoteDetailsOperation, AndRequestType: "POST", AndShowLoader: true, controller: controller)
     }
-    class func SendScannedDeliveryNote(code: String){
+    class func SendScannedDeliveryNote(code: String, controller: BaseUICtrl){
         let myWebFunctions: WebFunctions = WebFunctions()
         let myParameters: String = "{\"code\":\"\(code)\"}"
-        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.scanDeliveryNoteOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.scanDeliveryNoteOperation, AndRequestType: "POST", AndShowLoader: true)
+        myWebFunctions.SendPOSTRequestWithOperation(GlobalVariables.scanDeliveryNoteOperation, AndParameters: myParameters, AndLoaderText: "", AndCallBackKey: GlobalVariables.scanDeliveryNoteOperation, AndRequestType: "POST", AndShowLoader: true, controller: controller)
     }
     
     
@@ -129,7 +129,7 @@ class WebFunctions {
         print(error)
     }
     
-    func SendPOSTRequestWithOperation(_ myOperation: String, AndParameters myParameters: String, AndLoaderText myLoaderText: String, AndCallBackKey myCallBackKey: String, AndRequestType:String, AndShowLoader: Bool) {
+    func SendPOSTRequestWithOperation(_ myOperation: String, AndParameters myParameters: String, AndLoaderText myLoaderText: String, AndCallBackKey myCallBackKey: String, AndRequestType:String, AndShowLoader: Bool, controller: BaseUICtrl) {
         
         let URL: String = "\(GlobalVariables.sharedManager.WebServiceLink)/\(myOperation)/"
         print("URL: \(URL)")
@@ -156,7 +156,7 @@ class WebFunctions {
             
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             request.addValue(authorizationKey, forHTTPHeaderField: "Authorization")
-            request.timeoutInterval = 20000.0
+            request.timeoutInterval = 60
         }
         
         if AndShowLoader {
@@ -167,6 +167,9 @@ class WebFunctions {
             (data, response, error) -> Void in
             if let error = error {
                 print(error)
+                controller.showAlert(withTitle: "Error", message: error.localizedDescription)
+                controller.removeSpinner()
+                NotificationCenter.default.post(name: Notification.Name(GlobalVariables.errorNotificationName), object: nil,userInfo: ["error": error])
                 return
             }
             

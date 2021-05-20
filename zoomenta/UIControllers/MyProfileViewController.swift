@@ -22,6 +22,7 @@ class MyProfileViewController: BaseUICtrl {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         super.fixTextBox(txt: txtFullName, disableTextBox: false)
         super.fixTextBox(txt: txtEmail, disableTextBox: false)
         txtEmail.text = GlobalVariables.sharedManager.myUser.email

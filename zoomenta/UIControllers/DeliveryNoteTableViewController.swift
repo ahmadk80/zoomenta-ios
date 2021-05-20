@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DeliveryNoteTableViewController: UITableViewController {
+class DeliveryNoteTableViewController: BaseUICtrl, UITableViewController {
     
     var pickerToolbar: UIToolbar?
     var dateTextField: UITextField?
@@ -31,7 +31,7 @@ class DeliveryNoteTableViewController: UITableViewController {
         
         let currCalendar = Calendar.current
         let fromDate = currCalendar.date(byAdding: monthCom, to: Date()) ?? Date()
-        WebFunctions.GetDeliveryNoteHistory(from: fromDate, to: Date())
+        WebFunctions.GetDeliveryNoteHistory(from: fromDate, to: Date(), controller: self)
         
         
         //        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "deliveryNoteCell")
@@ -51,9 +51,7 @@ class DeliveryNoteTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
     }
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 150
-    }
+ 
     override  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
 //        let mainTabBarController = storyBoard.instantiateViewController(identifier:  "DeliveryNoteDetails")

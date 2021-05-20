@@ -11,6 +11,7 @@ import UIKit
 
 class LoginViewController: BaseUICtrl {
     
+    @IBOutlet weak var btnLogin: UIButton!
     @IBOutlet weak var txtCode: UITextField!
     override func viewDidAppear(_ animated: Bool) {
         if(GlobalVariables.sharedManager.isLoggedIn())
@@ -25,7 +26,9 @@ class LoginViewController: BaseUICtrl {
             object: nil)
         fixTextBox(txt: txtCode)
     }
-    
+    override func viewDidLoad() {
+        roundAButton(btn: btnLogin)
+    }
     
     @objc func reactToLoginResult(_ note: Notification) {
         OperationQueue.main.addOperation(){
@@ -52,7 +55,7 @@ class LoginViewController: BaseUICtrl {
                 return
              }
            
-            WebFunctions.Login(txtCode.text!, DeviceId: deviceID)
+            WebFunctions.Login(txtCode.text!, DeviceId: deviceID, controller: self)
         } else{
             GlobalFunctions.alertError(webView: self, strError: "Please enter OTP")
         }

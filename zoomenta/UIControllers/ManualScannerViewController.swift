@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 class ManualScannerViewController : BaseUICtrl{
   
+    @IBOutlet weak var lblError: UILabel!
+    @IBOutlet weak var btnSubmit: UIButton!
+    @IBOutlet weak var btnScanBarcode: UIButton!
+    
     @objc func dismissKeyboard(){
         view.endEditing(true)
     }
@@ -26,6 +30,8 @@ class ManualScannerViewController : BaseUICtrl{
             name: NSNotification.Name(rawValue: GlobalVariables.actionScanDeliveryNoteCompleteNotificationName),
             object: nil)
         fixTextBox(txt: txtBarcode)
+        roundAButton(btn: btnScanBarcode)
+        roundAButton(btn: btnSubmit)
          
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -40,14 +46,21 @@ class ManualScannerViewController : BaseUICtrl{
     }
     
     @objc func reactToSendScan(_ note: Notification) {
-        OperationQueue.main.addOperation(){
+        OperationQueue.main.addOperation(){ [self] in
             self.removeSpinner()
             let response: ResponseEnvelope = try! note.userInfo?["response"] as! ResponseEnvelope<String>;()
+            
+            
+            self.lblError.isHidden = false
             if(response.result == true){
                 //Do UI stuff here
-                GlobalFunctions.alertInfo(webView: self, strError: response.message ?? "Unknown Error")
+                self.lblError.text = response.message
+                self.lblError.textColor = UIColor.gray
+                //GlobalFunctions.alertInfo(webView: self, strError: response.message ?? "Unknown Error")
             }else{
-                GlobalFunctions.alertError(webView: self, strError: response.message ?? "Unknown Error")
+                self.lblError.text = response.message
+                self.lblError.textColor = UIColor.red
+                //GlobalFunctions.alertError(webView: self, strError: response.message ?? "Unknown Error")
             }
         }
     }
@@ -57,11 +70,15 @@ class ManualScannerViewController : BaseUICtrl{
         submitBarcode()
     }
     func submitBarcode(){
+        self.lblError.isHidden = true
         if(txtBarcode.text?.trimmingCharacters(in: .whitespacesAndNewlines) == ""){
-            GlobalFunctions.alertError(webView: self, strError: "Please enter a barcode value")
+            self.lblError.isHidden = false
+            self.lblError.text = "Please enter a barcode value"
+            self.lblError.textColor = UIColor.red
+           // GlobalFunctions.alertError(webView: self, strError: "Please enter a barcode value")
         }else{
             showSpinner(onView: self.view)
-            WebFunctions.SendScannedDeliveryNote(code: txtBarcode.text ?? "")
+            WebFunctions.SendScannedDeliveryNote(code: txtBarcode.text ?? "", controller: self)
         }
         GlobalVariables.sharedManager.scannedValue = ""
     }

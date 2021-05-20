@@ -15,10 +15,10 @@ extension UITextField {
         let datePicker = UIDatePicker(frame: CGRect(x: 0, y: 0, width: screenWidth, height: 216))//1
         datePicker.datePickerMode = .date //2
         // iOS 14 and above
-//        if #available(iOS 14, *) {// Added condition for iOS 14
-//          datePicker.preferredFocusEnvironments = .wheels
-//          datePicker.sizeToFit()
-//        }
+        if #available(iOS 14, *) {// Added condition for iOS 14
+            datePicker.preferredDatePickerStyle = .wheels
+          datePicker.sizeToFit()
+        }
         self.inputView = datePicker //3
         
         // Create a toolbar and assign it to inputAccessoryView

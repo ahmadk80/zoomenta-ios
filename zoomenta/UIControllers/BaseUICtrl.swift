@@ -10,6 +10,11 @@ import Foundation
 import UIKit
 class BaseUICtrl : UIViewController
 {
+    override func viewDidAppear(_ animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : UIColor.white]
+    }
     func fixTextBox(txt: UITextField, disableTextBox: Bool = true){
         let botomLine = CALayer()
         botomLine.frame = CGRect(x: 0.0, y: txt.frame.height - 1, width: txt.frame.width , height: 1.0)
@@ -26,7 +31,10 @@ class BaseUICtrl : UIViewController
         loadHomeScreenDirectly(ctrlName: "MainTabBarController")
         
     }
-    
+    func roundAButton(btn: UIButton){
+        btn.layer.cornerRadius = 5
+        btn.clipsToBounds = true
+    }
     func showSpinner(onView : UIView) {
            let spinnerView = UIView.init(frame: onView.bounds)
         spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)

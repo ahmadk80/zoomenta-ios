@@ -26,7 +26,7 @@ struct DeliveryNoteRow: View {
 struct DeliveryNoteRow_Previews: PreviewProvider {
     static var previews: some View {
         DeliveryNoteRow(deliveryNote: GlobalVariables.sharedManager.deliverNotes[0])
-            .previewLayout(.fixed(width: 300, height: 70))
+            .previewLayout(.fixed(width: 300, height: 50))
      
     }
 }

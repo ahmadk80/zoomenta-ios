@@ -71,18 +71,13 @@ class DNController
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "deliveryNoteCell", for: indexPath) as! DeliveryNoteCell
         cell.nameLabel.text = GlobalVariables.sharedManager.deliverNotes[indexPath.row].name
-        
-        
-        
         cell.dateLabel.text = String(GlobalVariables.sharedManager.deliverNotes[indexPath.row].scanningDate.prefix(10))
-        
-        
         return cell;
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if(indexPath.row % 2 == 0)
         {
-            cell.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            cell.backgroundColor = #colorLiteral(red: 0.9607843137, green: 0.9568627451, blue: 0.9568627451, alpha: 1)
         }
         else
         {
@@ -107,39 +102,25 @@ class DNController
                    object: nil)
                var monthCom = DateComponents()
                monthCom.month = -10
-               
+         
                let currCalendar = Calendar.current
                let fromDate = currCalendar.date(byAdding: monthCom, to: Date()) ?? Date()
                txtFromDate.text = format.string(from: fromDate)
                txtToDate.text = format.string(from: Date())
-               WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!)
+        WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
                self.txtFromDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneFrom)) //1
                self.txtToDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneTo)) //1
-               
+        if let datePicker = self.txtFromDate.inputView as? UIDatePicker { // 2-1
+            datePicker.date = fromDate
+        }
                super.fixTextBox(txt: txtFromDate)
                super.fixTextBox(txt: txtToDate)
     }
     override func viewDidAppear(_ animated: Bool) {
         
-//        format.dateStyle = .medium
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(DNController.reactToLoadDeliveryResult(_:)),
-//            name: NSNotification.Name(rawValue: GlobalVariables.actionDeliveryNoteHistoryCompleteNotificationName),
-//            object: nil)
-//        var monthCom = DateComponents()
-//        monthCom.month = -10
-//
-//        let currCalendar = Calendar.current
-//        let fromDate = currCalendar.date(byAdding: monthCom, to: Date()) ?? Date()
-//        txtFromDate.text = format.string(from: fromDate)
-//        txtToDate.text = format.string(from: Date())
-       WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!)
-//        self.txtFromDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneFrom)) //1
-//        self.txtToDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneTo)) //1
-//
-//        super.fixTextBox(txt: txtFromDate)
-//        super.fixTextBox(txt: txtToDate)
+        super.viewDidAppear(animated)
+        WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
+ 
     }
     //2
     @objc func tapDoneFrom() {
@@ -148,7 +129,7 @@ class DNController
             dateformatter.dateStyle = .medium // 2-3
             self.txtFromDate.text = dateformatter.string(from: datePicker.date) //2-4
             self.showSpinner(onView: self.view)
-            WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!)
+            WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
         }
         self.txtFromDate.resignFirstResponder() // 2-5
     }
@@ -159,7 +140,7 @@ class DNController
             dateformatter.dateStyle = .medium // 2-3
             self.txtToDate.text = dateformatter.string(from: datePicker.date) //2-4
             self.showSpinner(onView: self.view)
-            WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!)
+            WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
         }
         self.txtToDate.resignFirstResponder() // 2-5
     }
@@ -177,6 +158,8 @@ class DNController
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         GlobalVariables.sharedManager.selectedDeliveryNote = GlobalVariables.sharedManager.deliverNotes[indexPath.row].deliveryNoteId
+        
+        GlobalVariables.sharedManager.selectedDeliveryNoteIndex = indexPath.row 
         performSegue(withIdentifier: "segueDNDetails", sender: nil)
     }
     
