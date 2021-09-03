@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Zoomenta - Profile-->
+        <!--Profile-->
         <scene sceneID="Obr-Ar-uMB">
             <objects>
                 <viewController id="nY8-In-sSP" customClass="MyProfileViewController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
@@ -47,20 +47,28 @@
                         <viewLayoutGuide key="safeArea" id="iWc-rL-vCB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Zoomenta - Profile" id="W7w-OL-fh2"/>
+                    <navigationItem key="navigationItem" title="Profile" id="W7w-OL-fh2">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="h2E-cI-CxK"/>
+                        <barButtonItem key="rightBarButtonItem" title="Home" image="house.fill" catalog="system" id="9BK-7Z-ojX">
+                            <connections>
+                                <action selector="backTouch:" destination="nY8-In-sSP" id="KSF-W2-E4D"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="sideMenuBtn" destination="h2E-cI-CxK" id="pq9-4s-9iM"/>
                         <outlet property="txtEmail" destination="puL-5q-2hW" id="eDL-GF-8VC"/>
                         <outlet property="txtFullName" destination="zhk-7o-h2Q" id="Ugk-Bj-KIy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uow-k2-mYO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="917" y="-403"/>
+            <point key="canvasLocation" x="1826.0869565217395" y="-403.12499999999994"/>
         </scene>
-        <!--Zoomenta - Enter Barcode-->
+        <!--Enter Barcode-->
         <scene sceneID="11w-4x-gt9">
             <objects>
-                <viewController id="g9X-hW-0tF" customClass="ManualScannerViewController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="scanViewController" id="g9X-hW-0tF" customClass="ManualScannerViewController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="THQ-PQ-M3K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -133,11 +141,22 @@
                         <viewLayoutGuide key="safeArea" id="dzA-qL-hNN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Zoomenta - Enter Barcode" id="gWj-JH-Vh3"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Enter Barcode" id="gWj-JH-Vh3">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="lAv-vN-z59"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="0cg-5I-lg7"/>
+                        <barButtonItem key="rightBarButtonItem" title="Home" image="house.fill" catalog="system" id="iFE-4K-FsN">
+                            <connections>
+                                <action selector="homeTouch:" destination="g9X-hW-0tF" id="HO1-ws-QvC"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="btnScanBarcode" destination="Lvk-bB-lYL" id="SIc-Er-kqu"/>
                         <outlet property="btnSubmit" destination="UpQ-Yj-R7j" id="FdH-EA-X63"/>
                         <outlet property="lblError" destination="0Bf-fa-3ri" id="0kL-U4-dfk"/>
+                        <outlet property="sideMenuBtn" destination="0cg-5I-lg7" id="oVj-k3-eN0"/>
                         <outlet property="txtBarcode" destination="Y5p-2T-bIa" id="txM-aW-BDP"/>
                     </connections>
                 </viewController>
@@ -159,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LyP-fe-ZVH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1907" y="329"/>
+            <point key="canvasLocation" x="1907.0000000000002" y="329"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="OMQ-J1-ACX">
@@ -208,7 +227,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3eT-2F-dTO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-3151" y="-542"/>
+            <point key="canvasLocation" x="-3151.0000000000005" y="-542"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="Wdc-gs-Vyn">
@@ -286,33 +305,74 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gzd-mz-CTM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1690" y="-542"/>
+            <point key="canvasLocation" x="-1690.0000000000002" y="-542"/>
         </scene>
-        <!--Zoomenta-->
-        <scene sceneID="kYw-UI-uwv">
+        <!--Home-->
+        <scene sceneID="HjG-zi-9s2">
             <objects>
-                <tabBarController storyboardIdentifier="MainTabBarController" title="Zoomenta" id="HFu-e4-oPC" customClass="MainScreenController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
-                    <extendedEdge key="edgesForExtendedLayout"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TdN-c9-yTU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </tabBar>
+                <viewController id="F45-eB-8IS" customClass="HomeViewCtrl" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LfB-DC-2G5">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ne4-rO-rgA">
+                                <rect key="frame" x="132" y="255" width="150" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66000944070000001" green="0.82896427390000005" blue="0.047905105580000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.69055771840000002" green="0.86733255970000001" blue="0.050122374570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Scan">
+                                    <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="scanTouch:" destination="F45-eB-8IS" eventType="touchUpInside" id="fv3-Th-9s0"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DJP-bg-mDF">
+                                <rect key="frame" x="132" y="474" width="150" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66000944070000001" green="0.82896427390000005" blue="0.047905105580000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.69055771840000002" green="0.86733255970000001" blue="0.050122374570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Returned Cards">
+                                    <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="returnedCardsTouch:" destination="F45-eB-8IS" eventType="touchUpInside" id="LqW-Ps-hTE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hub-Me-Y2s">
+                                <rect key="frame" x="132" y="367" width="150" height="80"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.66000944070000001" green="0.82896427390000005" blue="0.047905105580000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="tintColor" red="0.69055771840000002" green="0.86733255970000001" blue="0.050122374570000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Cards List">
+                                    <color key="titleColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="cardsListTouch:" destination="F45-eB-8IS" eventType="touchUpInside" id="RWT-8Q-IfF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="W0O-d7-Jlv"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Home" id="0pQ-RN-zkH">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="ASp-T4-c9A"/>
+                    </navigationItem>
                     <connections>
-                        <segue destination="1Go-BV-7T6" kind="relationship" relationship="viewControllers" id="lDx-FY-Vcm"/>
-                        <segue destination="ZUr-fk-7V8" kind="relationship" relationship="viewControllers" id="RCg-aX-EA1"/>
-                        <segue destination="rFw-hd-1Du" kind="relationship" relationship="viewControllers" id="RMW-PQ-eG5"/>
+                        <outlet property="btnCardsList" destination="Hub-Me-Y2s" id="6Hv-bQ-5c4"/>
+                        <outlet property="btnReturnedCards" destination="DJP-bg-mDF" id="UTo-JH-coF"/>
+                        <outlet property="btnScan" destination="ne4-rO-rgA" id="g1L-JM-Cia"/>
+                        <outlet property="sideMenuBtn" destination="ASp-T4-c9A" id="f9z-en-s0v"/>
                     </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="3x3-7s-pgs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I9V-Hq-77z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-994.20289855072474" y="-542.41071428571422"/>
+            <point key="canvasLocation" x="-30.434782608695656" y="-564.50892857142856"/>
         </scene>
-        <!--Zoomenta - Home-->
+        <!--Home-->
         <scene sceneID="5Ov-vL-1Id">
             <objects>
-                <viewController id="w6s-Kv-aqJ" customClass="DNController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="searchViewController" id="w6s-Kv-aqJ" customClass="DNController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="esh-a8-RkY">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -427,19 +487,29 @@
                         <viewLayoutGuide key="safeArea" id="XGh-ab-8gU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Zoomenta - Home" leftItemsSupplementBackButton="YES" id="oRJ-zl-EPI" colorLabel="IBBuiltInLabel-Gray">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Home" leftItemsSupplementBackButton="YES" id="oRJ-zl-EPI" colorLabel="IBBuiltInLabel-Gray">
                         <barButtonItem key="backBarButtonItem" title="Back" id="YAE-Kw-bbQ"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="zgr-Tw-dYE"/>
+                        <barButtonItem key="rightBarButtonItem" title="Home" image="house.fill" catalog="system" id="7EM-8q-Rl7">
+                            <connections>
+                                <action selector="homeTouch:" destination="w6s-Kv-aqJ" id="4DN-ko-qEF"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="homeTouch" destination="7EM-8q-Rl7" id="J3A-ix-O28"/>
+                        <outlet property="sideMenuBtn" destination="zgr-Tw-dYE" id="heY-74-Au5"/>
                         <outlet property="tblDetails" destination="63l-Tf-CWQ" id="G2R-3l-Lmd"/>
                         <outlet property="txtFromDate" destination="dRd-lD-dgs" id="rdk-3f-nTy"/>
                         <outlet property="txtToDate" destination="eW3-IO-BIL" id="E5U-Io-LuZ"/>
-                        <segue destination="g1d-aD-WXU" kind="push" identifier="segueDNDetails" id="mFD-JB-Nve"/>
+                        <segue destination="g1d-aD-WXU" kind="show" identifier="segueDNDetails" id="mFD-JB-Nve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yAc-AP-trv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="915.94202898550736" y="-1102.2321428571429"/>
+            <point key="canvasLocation" x="2736.231884057971" y="-1102.2321428571429"/>
         </scene>
         <!--Zoomenta - Delivery Note Details-->
         <scene sceneID="nkg-FP-GMA">
@@ -565,12 +635,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nNp-3o-R6r" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1995.6521739130437" y="-1088.1696428571429"/>
+            <point key="canvasLocation" x="3815.9420289855075" y="-1088.1696428571429"/>
         </scene>
         <!--My Profile-->
         <scene sceneID="hXJ-NX-537">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZUr-fk-7V8" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="profileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="ZUr-fk-7V8" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="My Profile" image="person" catalog="system" id="Kog-hd-Pen"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="PuW-q9-6tz">
@@ -584,12 +654,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uwb-J5-fY0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7" y="-403"/>
+            <point key="canvasLocation" x="915.94202898550736" y="-403.12499999999994"/>
         </scene>
         <!--Scan-->
         <scene sceneID="lDf-hm-v89">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="rFw-hd-1Du" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="scanNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="rFw-hd-1Du" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Scan" image="camera.viewfinder" catalog="system" id="bjg-cc-cS9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="csa-LE-G8R">
@@ -603,12 +673,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4PI-DG-bKY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7" y="329"/>
+            <point key="canvasLocation" x="7.0000000000000009" y="329"/>
         </scene>
         <!--Home-->
         <scene sceneID="ZuV-xa-9BI">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Go-BV-7T6" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="searchNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="1Go-BV-7T6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="house" catalog="system" id="wgR-eS-LX6"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Mfa-Do-Gbf">
@@ -621,16 +691,165 @@
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GlZ-Lz-txe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="dQZ-XC-PSm">
+                    <rect key="frame" x="0.0" y="0.0" width="260" height="896"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="87m-W9-ryp">
+                            <rect key="frame" x="0.0" y="112" width="260" height="719"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Footer Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCg-Mi-1g2">
+                            <rect key="frame" x="10" y="839" width="240" height="15"/>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="o9c-JF-iTl">
+                            <rect key="frame" x="16" y="44" width="227" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="cpz-ce-mUg"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="Sw3-dg-FkW"/>
+                    <color key="backgroundColor" red="0.67047818619999999" green="0.84211289789999999" blue="0.048664952820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="o9c-JF-iTl" secondAttribute="trailing" constant="17" id="1gu-D4-i6M"/>
+                        <constraint firstItem="87m-W9-ryp" firstAttribute="leading" secondItem="Sw3-dg-FkW" secondAttribute="leading" id="L01-ug-8gO"/>
+                        <constraint firstItem="87m-W9-ryp" firstAttribute="trailing" secondItem="Sw3-dg-FkW" secondAttribute="trailing" id="Y12-dA-wqm"/>
+                        <constraint firstItem="wCg-Mi-1g2" firstAttribute="top" secondItem="87m-W9-ryp" secondAttribute="bottom" constant="8" id="bL5-Mh-ie2"/>
+                        <constraint firstItem="87m-W9-ryp" firstAttribute="top" secondItem="o9c-JF-iTl" secondAttribute="bottom" constant="18" id="bq9-uk-8V1"/>
+                        <constraint firstItem="Sw3-dg-FkW" firstAttribute="bottom" secondItem="wCg-Mi-1g2" secondAttribute="bottom" constant="8" id="eWD-Gx-2j9"/>
+                        <constraint firstItem="o9c-JF-iTl" firstAttribute="top" secondItem="Sw3-dg-FkW" secondAttribute="top" id="jT9-sC-JxG"/>
+                        <constraint firstAttribute="trailing" secondItem="wCg-Mi-1g2" secondAttribute="trailing" constant="10" id="rZE-DT-iXw"/>
+                        <constraint firstItem="o9c-JF-iTl" firstAttribute="leading" secondItem="Sw3-dg-FkW" secondAttribute="leading" constant="16" id="rrg-Id-ZBf"/>
+                        <constraint firstItem="wCg-Mi-1g2" firstAttribute="leading" secondItem="Sw3-dg-FkW" secondAttribute="leading" constant="10" id="slN-z2-Ixf"/>
+                    </constraints>
+                </view>
             </objects>
-            <point key="canvasLocation" x="7" y="-1102"/>
+            <point key="canvasLocation" x="1826.0869565217392" y="-1102.2321428571429"/>
+        </scene>
+        <!--Side Menu View Controller-->
+        <scene sceneID="Ofs-At-Lqb">
+            <objects>
+                <viewController storyboardIdentifier="SideMenuID" id="AE1-gp-iXG" customClass="SideMenuViewController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ew3-LT-rvx">
+                        <rect key="frame" x="0.0" y="0.0" width="260" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Footer Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hC5-ci-fXA">
+                                <rect key="frame" x="10" y="839" width="240" height="15"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="12"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="khp-9W-Oc0">
+                                <rect key="frame" x="16" y="44" width="227" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="rxw-s8-Mju"/>
+                                </constraints>
+                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="rcv-iG-tlz">
+                                <rect key="frame" x="-9" y="102" width="269" height="729"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="BEn-sP-gBf"/>
+                        <color key="backgroundColor" red="0.67047818619999999" green="0.84211289789999999" blue="0.048664952820000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="hC5-ci-fXA" firstAttribute="leading" secondItem="BEn-sP-gBf" secondAttribute="leading" constant="10" id="90x-Fx-P8a"/>
+                            <constraint firstAttribute="trailing" secondItem="hC5-ci-fXA" secondAttribute="trailing" constant="10" id="eSf-BB-rNQ"/>
+                            <constraint firstAttribute="trailing" secondItem="khp-9W-Oc0" secondAttribute="trailing" constant="17" id="mSj-KX-JiO"/>
+                            <constraint firstItem="khp-9W-Oc0" firstAttribute="leading" secondItem="BEn-sP-gBf" secondAttribute="leading" constant="16" id="oRz-57-C8S"/>
+                            <constraint firstItem="BEn-sP-gBf" firstAttribute="bottom" secondItem="hC5-ci-fXA" secondAttribute="bottom" constant="8" id="wkW-iq-WZn"/>
+                            <constraint firstItem="khp-9W-Oc0" firstAttribute="top" secondItem="BEn-sP-gBf" secondAttribute="top" id="xET-qC-hog"/>
+                        </constraints>
+                    </view>
+                    <size key="freeformSize" width="260" height="896"/>
+                    <connections>
+                        <outlet property="footerLabel" destination="hC5-ci-fXA" id="pYs-l5-ZHI"/>
+                        <outlet property="headerImageView" destination="khp-9W-Oc0" id="Qsd-Tm-YKI"/>
+                        <outlet property="sideMenuTableView" destination="rcv-iG-tlz" id="dNP-sK-txO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rem-vW-eQf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1543.4782608695655" y="-1216.0714285714284"/>
+        </scene>
+        <!--Home-->
+        <scene sceneID="Jyh-r4-wgq">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P7g-0d-tjt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="MainViewController" id="CeR-ub-oAV" customClass="MainViewController" customModule="zoomenta" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eap-dI-Xt4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="GTZ-st-S8X"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Home" id="o3z-G9-j1g">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="menu" id="Mpl-Zc-6bV"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="sideMenuBtn" destination="Mpl-Zc-6bV" id="z5S-gx-z9p"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="39.130434782608695" y="-1215.4017857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Zcc-xe-n6R">
+            <objects>
+                <navigationController storyboardIdentifier="MainTabBarController" automaticallyAdjustsScrollViewInsets="NO" id="i3x-oJ-pRs" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Rsg-ig-zqe">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F45-eB-8IS" kind="relationship" relationship="rootViewController" id="a4R-X7-Zl3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="X6R-5w-0GN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-940.57971014492773" y="-564.50892857142856"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="iDt-sS-aZO">
+            <objects>
+                <navigationController storyboardIdentifier="homeNavigation" automaticallyAdjustsScrollViewInsets="NO" id="nNX-Nk-kQB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gOV-Y7-RoM">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="CeR-ub-oAV" kind="relationship" relationship="rootViewController" id="Kbw-zL-fqg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ngb-er-VBB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-871.01449275362324" y="-1215.4017857142856"/>
         </scene>
     </scenes>
-    <color key="tintColor" red="0.6705882352941176" green="0.76470588235294112" blue="0.2196078431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
     <resources>
         <image name="camera.viewfinder" catalog="system" width="128" height="115"/>
         <image name="house" catalog="system" width="128" height="106"/>
+        <image name="house.fill" catalog="system" width="128" height="106"/>
+        <image name="logo" width="500" height="100"/>
         <image name="logo.png" width="3167" height="1076"/>
+        <image name="menu" width="25" height="25"/>
         <image name="person" catalog="system" width="128" height="117"/>
+        <systemColor name="secondarySystemGroupedBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

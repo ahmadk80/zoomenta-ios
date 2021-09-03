@@ -10,6 +10,9 @@ import Foundation
 import UIKit
 class BaseUICtrl : UIViewController
 {
+    func goHome(){
+                    revealViewController()?.selectedCell(0)
+    }
     override func viewDidAppear(_ animated: Bool) {
         
         super.viewDidAppear(animated)
@@ -28,8 +31,8 @@ class BaseUICtrl : UIViewController
         loadHomeScreenDirectly(ctrlName: "LoginController")
     }
     func loadMainScreen(){
-        loadHomeScreenDirectly(ctrlName: "MainTabBarController")
-        
+       // loadHomeScreenDirectly(ctrlName: "MainTabBarController")
+        loadHomeScreenDirectly(ctrlName: "MainViewController")
     }
     func roundAButton(btn: UIButton){
         btn.layer.cornerRadius = 5

@@ -9,13 +9,19 @@
 import Foundation
 import UIKit
 class ManualScannerViewController : BaseUICtrl{
-  
+    
+    @IBOutlet weak var sideMenuBtn: UIBarButtonItem!
     @IBOutlet weak var lblError: UILabel!
     @IBOutlet weak var btnSubmit: UIButton!
     @IBOutlet weak var btnScanBarcode: UIButton!
     
     @objc func dismissKeyboard(){
         view.endEditing(true)
+    }
+   
+   
+    @IBAction func homeTouch(_ sender: Any) {
+        super.goHome()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +38,18 @@ class ManualScannerViewController : BaseUICtrl{
         fixTextBox(txt: txtBarcode)
         roundAButton(btn: btnScanBarcode)
         roundAButton(btn: btnSubmit)
-         
+        
     }
     override func viewDidAppear(_ animated: Bool) {
+        self.sideMenuBtn.target = revealViewController()
+        self.sideMenuBtn.action = #selector(self.revealViewController()?.revealSideMenu)
+        
         if(GlobalVariables.sharedManager.scannedValue != nil && GlobalVariables.sharedManager.scannedValue != ""){
             txtBarcode.text =  GlobalVariables.sharedManager.scannedValue
             submitBarcode()
         }
+        self.sideMenuBtn.target = revealViewController()
+        self.sideMenuBtn.action = #selector(self.revealViewController()?.revealSideMenu)
     }
     @IBAction func btnLogout(_ sender: Any) {
         //  GlobalFunctions.alertLogout(webView: self)
@@ -75,7 +86,7 @@ class ManualScannerViewController : BaseUICtrl{
             self.lblError.isHidden = false
             self.lblError.text = "Please enter a barcode value"
             self.lblError.textColor = UIColor.red
-           // GlobalFunctions.alertError(webView: self, strError: "Please enter a barcode value")
+            // GlobalFunctions.alertError(webView: self, strError: "Please enter a barcode value")
         }else{
             showSpinner(onView: self.view)
             WebFunctions.SendScannedDeliveryNote(code: txtBarcode.text ?? "", controller: self)

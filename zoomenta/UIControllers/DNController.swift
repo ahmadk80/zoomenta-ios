@@ -11,8 +11,13 @@ import UIKit
 class DNController
 : BaseUICtrl, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
+    @IBOutlet weak var homeTouch: UIBarButtonItem!
     
+    @IBOutlet weak var sideMenuBtn: UIBarButtonItem!
     @IBOutlet weak var txtToDate: UITextField!
+    @IBAction func homeTouch(_ sender: Any) {
+        goHome()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(GlobalVariables.sharedManager.deliverNotes == nil){
@@ -23,7 +28,7 @@ class DNController
         
     }
     @IBOutlet weak var txtFromDate: UITextField!
-   
+    
     var searchActive: Bool = false
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         searchActive = true;
@@ -94,33 +99,35 @@ class DNController
         self.showSpinner(onView: self.view)
     }
     override func viewDidLoad() {
-         format.dateStyle = .medium
-               NotificationCenter.default.addObserver(
-                   self,
-                   selector: #selector(DNController.reactToLoadDeliveryResult(_:)),
-                   name: NSNotification.Name(rawValue: GlobalVariables.actionDeliveryNoteHistoryCompleteNotificationName),
-                   object: nil)
-               var monthCom = DateComponents()
-               monthCom.month = -10
-         
-               let currCalendar = Calendar.current
-               let fromDate = currCalendar.date(byAdding: monthCom, to: Date()) ?? Date()
-               txtFromDate.text = format.string(from: fromDate)
-               txtToDate.text = format.string(from: Date())
+        format.dateStyle = .medium
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(DNController.reactToLoadDeliveryResult(_:)),
+            name: NSNotification.Name(rawValue: GlobalVariables.actionDeliveryNoteHistoryCompleteNotificationName),
+            object: nil)
+        var monthCom = DateComponents()
+        monthCom.month = -10
+        
+        let currCalendar = Calendar.current
+        let fromDate = currCalendar.date(byAdding: monthCom, to: Date()) ?? Date()
+        txtFromDate.text = format.string(from: fromDate)
+        txtToDate.text = format.string(from: Date())
         WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
-               self.txtFromDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneFrom)) //1
-               self.txtToDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneTo)) //1
+        self.txtFromDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneFrom)) //1
+        self.txtToDate.setInputViewDatePicker(target: self, selector: #selector(tapDoneTo)) //1
         if let datePicker = self.txtFromDate.inputView as? UIDatePicker { // 2-1
             datePicker.date = fromDate
         }
-               super.fixTextBox(txt: txtFromDate)
-               super.fixTextBox(txt: txtToDate)
+        super.fixTextBox(txt: txtFromDate)
+        super.fixTextBox(txt: txtToDate)
     }
     override func viewDidAppear(_ animated: Bool) {
+        self.sideMenuBtn.target = revealViewController()
+        self.sideMenuBtn.action = #selector(self.revealViewController()?.revealSideMenu)
         
         super.viewDidAppear(animated)
         WebFunctions.GetDeliveryNoteHistory(from: format.date(from: txtFromDate.text!)!, to: format.date(from: txtToDate.text!)!, controller: self)
- 
+        
     }
     //2
     @objc func tapDoneFrom() {
@@ -163,10 +170,10 @@ class DNController
         performSegue(withIdentifier: "segueDNDetails", sender: nil)
     }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if(indexPath.row % 2 == 0)
-//        cell.kCTBackgroundColorAttributeName.color
-//    }
+    //    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    //        if(indexPath.row % 2 == 0)
+    //        cell.kCTBackgroundColorAttributeName.color
+    //    }
     
     @IBAction func btnLogout(_ sender: Any) {
         alertLogout(webView: self)

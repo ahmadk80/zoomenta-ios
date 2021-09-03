@@ -14,7 +14,8 @@ class GlobalVariables: NSObject {
     // These are the properties you can store in your singleton
     internal var token: String = ""
     internal var userIsLoggedIn: Bool = false
-    internal var WebServiceLink: String = "https://zoomenta.menta-lb.com/api/MobileAPI"
+    internal var WebServiceLink: String =
+    "https://zoomenta.menta-lb.com/api/MobileAPI"
     //"http://93.187.35.11:4433/api/MobileAPI"
     internal var userFullName: String = ""
     internal var myMessage: String = ""
